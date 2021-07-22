@@ -1,27 +1,14 @@
+# This config is equivalent to both the '.circleci/extended/orb-free.yml' and the base '.circleci/config.yml'
 version: 2.1
 
-workflows:
-  default:
-    jobs:
-      - build:
-          context: "Boilerplate library"
+orbs:
+  node: circleci/node@4.1
 
-jobs:
-  build:
-    docker:
-      - image: circleci/node:10.15-stretch-browsers
-    working_directory: ~/project/
-    steps:
-      - checkout
-      - run:
-          name: 'Install dependencies'
-          command: npm install
-      - run:
-          name: 'Check'
-          command: npm run check
-      - run:
-          name: 'Test'
-          command: npm run test
-      - run:
-          name: 'Push to UXPin'
-          command: npm run push
+workflows:
+  sample:
+    jobs:
+      - node/test:
+          version: '15.1'
+          # This is the node version to use for the `cimg/node` tag
+          # Relevant tags can be found on the CircleCI Developer Hub
+          # https://circleci.com/developer/images/image/cimg/node
